@@ -133,7 +133,7 @@ int main()
     char game[30][90];
     int SnakeLenCounterX[2700];
     int SnakeLenCounterY[2700];
-    bool lose = true;
+    bool gm = true;
 
     SnakeLenCounterX[0] = 9;
     SnakeLenCounterY[0] = 10;
@@ -145,12 +145,12 @@ int main()
     
     while(true)//Запуск функции, ответстенной за вывод
     {
-        if (lose == false)//Если игрок проиграет
+        if (gm == false)//Если игрок проиграет
         {
             GameOver();
             if (GetAsyncKeyState(VK_RETURN))
             {
-                lose = true;
+                gm = true;
                 appleY = rand();
                 appleY = (appleY % (29)) + 1;
                 appleX = rand();
@@ -162,9 +162,9 @@ int main()
                 headYSpeed = 0;
             }
         }
-        if (lose == true)// Если игок еще не проиграл
+        if (gm == true)// Если игок еще не проиграл
         {
-            while (lose == true)
+            while (gm == true)
             {
 
                 //Формирование поля и головы
@@ -225,19 +225,6 @@ int main()
 
                 }
 
-                //Проигрыш при касании хвоста
-                for (int i = 1; i < SnakeLenght; i++)
-                {
-                    int x = SnakeLenCounterX[i];
-                    int y = SnakeLenCounterY[i];
-
-                    if (headX == x & headY == y)
-                    {
-                        GameOver();
-                        lose = false;
-                    }
-
-                }
 
 
                 //Запоминание послдених кординат головы
@@ -251,12 +238,24 @@ int main()
                 SnakeLenCounterX[0] = headX;
                 SnakeLenCounterY[0] = headY;
 
+                //Проигрыш при касании хвоста
+                for (int i = 1; i < SnakeLenght; i++)
+                {
+                    int x = SnakeLenCounterX[i];
+                    int y = SnakeLenCounterY[i];
 
+                    if (headX == x & headY == y)
+                    {
+                        GameOver();
+                        gm = false;
+                    }
+
+                }
                 //Проигрыш при касании краев поля
                 if (headX == 90 || headX == 0 || headY == 0 || headY == 29)
                 {
                     GameOver();
-                    lose = false;
+                    gm = false;
                 }
 
 
